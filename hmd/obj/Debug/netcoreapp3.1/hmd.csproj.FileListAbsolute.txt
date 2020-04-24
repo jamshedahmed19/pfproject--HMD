@@ -10,3 +10,4 @@ G:\jamshed_uni\PF\project\hmd\obj\Debug\netcoreapp3.1\hmd.AssemblyInfo.cs
 G:\jamshed_uni\PF\project\hmd\obj\Debug\netcoreapp3.1\hmd.dll
 G:\jamshed_uni\PF\project\hmd\obj\Debug\netcoreapp3.1\hmd.pdb
 G:\jamshed_uni\PF\project\hmd\obj\Debug\netcoreapp3.1\hmd.genruntimeconfig.cache
+G:\jamshed_uni\PF\project\hmd\obj\Debug\netcoreapp3.1\hmd.csprojAssemblyReference.cache
