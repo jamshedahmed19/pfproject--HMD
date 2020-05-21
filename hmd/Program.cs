@@ -6,16 +6,29 @@ namespace hmd
 {
     class Program
     {
+
+        //------------------------FILE PATHS-----------------------
+
         static string path = @"G:\jamshed_uni\PF\project\hmd\drs__info.txt";
         static string Covid__guides = @"G:\jamshed_uni\PF\project\hmd\covid__19-guide.txt";
         static string Covid__symptoms = @"G:\jamshed_uni\PF\project\hmd\covid__19-symptoms.txt";
         static string Pass_path = @"G:\jamshed_uni\PF\project\hmd\pass.txt";
         static string Username_path = @"G:\jamshed_uni\PF\project\hmd\username_info.txt";
         static string covid__report = @"G:\jamshed_uni\PF\project\hmd\covid__reports.txt";
+        static string patient_info = @"G:\jamshed_uni\PF\project\hmd\patient_info.txt";
+        static string drs_info = @"G:\jamshed_uni\PF\project\hmd\drs__info.txt";
 
+        //-----------------------------------------------------------
+
+        //------------------------MAIN METHOD-----------------------
+        static void Main(string[] args)
+        {
+            WelcomeScreen();
+        }
+
+        //------------------------WELCOME WINDOW OF HMD-----------------------
         static void WelcomeScreen()
         {
-            //login window
             Console.WriteLine();
             Console.WriteLine(DateTime.Now.ToString("\t\t\tHH:mm:ss\t\t\t\t\t\t\tdd-MM-yyyy"));
             Console.WriteLine("\t\t\t==========================================================================");
@@ -30,7 +43,7 @@ namespace hmd
             switch (selection_key)
             {
                 case 'l':
-                    loginWindow();
+                    LoginWindow();
                     break;
                 case 'c':
                     CovidDesk();
@@ -42,7 +55,10 @@ namespace hmd
             }
         }
 
-        static void loginWindow()
+        //----------------------------------------------------------------------
+
+        //------------------------ACCOUNT REGISTRATION/LOG IN WINDOW OF HMD-----------------------
+        static void LoginWindow()
         {
             //login window
             Console.WriteLine();
@@ -66,16 +82,55 @@ namespace hmd
                     break;
                 default:
                     Console.WriteLine("\t\t\tPlease Select Right Options\n\n");
-                    loginWindow();
+                    LoginWindow();
                     break;
             }
         }
 
+        //-----------------------------------------------------------------------
+
+        //------------------------LOGIN WINDOW OF HMD-----------------------
         static void Pass()
         {
+            //StreamWriter a = new StreamWriter(Username_path);
+            //Console.Write("\t\t\tEnter your Username:\t");
+            //string user_name = Console.ReadLine();
+            //user_name = user_name.ToLower();
+            //a.WriteLine("user b");
+            //a.WriteLine("pass b");
+            //a.Close();
+            //string username = Console.ReadLine();
+            //string pass = Console.ReadLine();
+            //StreamReader ab = new StreamReader(username);
+
+            //string line1 = ab.ReadLine();
+            //string line2 = ab.ReadLine();
+            ////int counter1 = 0;
+            ////int x = 1;
+
+            //while ((line1 != null) && (line2 != null))
+            //{
+            //    if ((line1 == username) && (line2 == pass))
+            //    {
+            //        Console.WriteLine("Welcome");
+            //        break;
+            //    }
+            //    else
+            //    {
+            //        Console.WriteLine("Try Again");
+            //    }
+
+            //    username = Console.ReadLine();
+            //    pass = Console.ReadLine();
+            //}
+            //Console.WriteLine();
+
+
+            //ab.Close();
             int i = 0;
             string user_pass;
-            do {
+            do
+            {
                 Console.Write("\t\t\tEnter your Username:\t");
                 string user_name = Console.ReadLine();
                 user_name = user_name.ToLower();
@@ -103,11 +158,11 @@ namespace hmd
                     i++;
                 }
 
-                if(i == 3)
+                if (i == 3)
                 {
-                    Console.WriteLine("Try Again later!!");
+                    Console.WriteLine("\n\t\t\tTry Again!!\n");
                 }
-            } while (i<3);
+            } while (i < 3);
 
             Console.WriteLine("\t\t 3. \t Press any key to go back\n");
             Console.WriteLine("\t\t 4. \t Press Q to to go to Main Menu\n\n\n");
@@ -118,15 +173,19 @@ namespace hmd
             switch (selection_key)
             {
                 case 'q':
-                    WelcomeScreen();
+                    LoginWindow();
                     break;
                 default:
                     Console.WriteLine("\t\t\tPlease Select Right Options\n\n");
-                    loginWindow();
+                    LoginWindow();
                     break;
             }
         }
-    
+
+        //-----------------------------------------------------------------------
+
+
+        //------------------------ACCOUNT REGISTRATION WINDOW OF HMD-----------------------
         static void AccountReg()
         {
             Console.WriteLine();
@@ -144,7 +203,7 @@ namespace hmd
 
             File.AppendAllText(Username_path, Environment.NewLine + user_name);
             File.AppendAllText(Pass_path, Environment.NewLine + user_pass);
-            Console.WriteLine("Data entered success");
+            Console.WriteLine("\n\t\t\tData entered success\n");
             Console.WriteLine();
 
             Console.WriteLine("\t\t 3. \t Press b to go back\n");
@@ -156,7 +215,7 @@ namespace hmd
             switch (selection_key)
             {
                 case 'b':
-                    loginWindow();
+                    LoginWindow();
                     break;
                 case 'q':
                     WelcomeScreen();
@@ -168,75 +227,9 @@ namespace hmd
             }
         }
 
-        public static string ReadPassword()
-        {
-            
-            string password = "";
-            ConsoleKeyInfo info = Console.ReadKey(true);
-            while (info.Key != ConsoleKey.Enter)
-            {
-                if (info.Key != ConsoleKey.Backspace)
-                {
-                    Console.Write("*");
-                    password += info.KeyChar;
-                }
-                else if (info.Key == ConsoleKey.Backspace)
-                {
-                    if (!string.IsNullOrEmpty(password))
-                    {
-                        // remove one character from the list of password characters
-                        password = password.Substring(0, password.Length - 1);
-                        // get the location of the cursor
-                        int pos = Console.CursorLeft;
-                        // move the cursor to the left by one character
-                        Console.SetCursorPosition(pos - 1, Console.CursorTop);
-                        // replace it with space
-                        Console.Write(" ");
-                        // move the cursor to the left by one character again
-                        Console.SetCursorPosition(pos - 1, Console.CursorTop);
-                    }
-                }
-                info = Console.ReadKey(true);
-            }
-            password = password.ToLower();
-            // add a new line because user pressed enter at the end of their password
-            Console.WriteLine();
-            return password;
-        }
+        //-----------------------------------------------------------------------
 
-        static void MenuScreen()
-        {
-            //------------welcome screen---------
-            Console.WriteLine();
-            Console.WriteLine(DateTime.Now.ToString("\t\t\tHH:mm:ss\t\t\t\t\t\t\tdd-MM-yyyy"));
-            Console.WriteLine("\t\t\t==========================================================================");
-            Console.WriteLine("\t\t\t\t*************** HOSPITAL MANAGEMENT SYSTEM MENU***************");
-            Console.WriteLine("\t\t\t==========================================================================\n\n");
-            Console.WriteLine("\t\t 1. \t Press D to select to get Docters Information\n");
-            Console.WriteLine("\t\t 2. \t Press P to select to get Patients Information\n");
-            Console.WriteLine("\t\t 2. \t Press C to go to Covid-19 Help Desk\n\n\n");
-
-            char selection_key = Console.ReadKey().KeyChar;
-            selection_key = char.ToLower(selection_key);
-
-            switch (selection_key)
-            {
-                case 'd':
-                    DrsWindow();
-                    break;
-                case 'p':
-                    patientsWindow();
-                    break;
-                case 'c':
-                    CovidDesk();
-                    break;
-                default:
-                    Console.WriteLine("\t\t\tPlease Select Right Options\n\n");
-                    WelcomeScreen();
-                    break;
-            }
-        }
-
+        //------------------------COVID HELP DESK WINDOW-----------------------
         static void CovidDesk()
         {
             // Coronavirus Help Desk
@@ -280,6 +273,9 @@ namespace hmd
             }
         }
 
+        //----------------------------------------------------------------------------
+
+        //------------------------COVID SELF TEST WINDOW-----------------------
         static void CoronaTest()
         {
             string remarks = "", test_result = "";
@@ -343,7 +339,7 @@ namespace hmd
                 }
                 else
                 {
-                    Console.WriteLine("Enter Right Input!!");
+                    Console.WriteLine("\n\t\t\tEnter Right Input!!\n");
                 }
             }
             else if (age > 6 && age < 45)
@@ -370,13 +366,13 @@ namespace hmd
                 }
                 else
                 {
-                    Console.WriteLine("Enter Right Input!!");
+                    Console.WriteLine("\n\t\t\tEnter Right Input!!\n");
 
                 }
             }
             else
             {
-                Console.WriteLine("Enter Right Input!!");
+                Console.WriteLine("\n\t\t\tEnter Right Input!!\n");
             }
 
             Console.WriteLine("\t\t\t-----------------------------------------------------------");
@@ -390,8 +386,8 @@ namespace hmd
             Console.WriteLine("\tReport ID\tAge\tHealth Cond.\tTest Result\t\tRemarks");
             Console.WriteLine("\t{0}\t\t{1}\t{2}\t\t{3}\t{4}", report_id, age, health_cond, test_result, remarks);
 
-            File.AppendAllText(covid__report, Environment.NewLine + "\t" + report_id + "\t\t" + name + "\t" + age + "\t" + health_cond + "\t\t "  + test_result + "\t" + remarks);
-            Console.WriteLine("Data entered success");
+            File.AppendAllText(covid__report, Environment.NewLine + "\t" + report_id + "\t\t" + name + "\t" + age + "\t" + health_cond + "\t\t " + test_result + "\t" + remarks);
+            Console.WriteLine("\n\t\t\tData entered success\n");
             Console.WriteLine();
 
             Console.WriteLine("\t\t 1. \t Press any key to Covid-19 Help Desk");
@@ -411,6 +407,71 @@ namespace hmd
             }
         }
 
+        //---------------------------------------------------------------------------------
+
+        //------------------------COVID-19 PREVENTION GUIDLINES WINDOW-----------------------
+        static void CovidGuides()
+        {
+            string[] lines = File.ReadAllLines(Covid__guides);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                Console.WriteLine(lines[i]);
+            }
+
+            Console.WriteLine("\n");
+            Console.WriteLine("\t\t\t ===================================================================\n\n");
+            Console.WriteLine("\t\t 1. \t Press any key to go to Covid-19 Help Desk\n");
+            Console.WriteLine("\t\t 2. \t Press Q to to go to Main Menu\n\n\n");
+
+            char selection_key = Console.ReadKey().KeyChar;
+            selection_key = char.ToLower(selection_key);
+            Console.WriteLine("\n\n");
+
+            switch (selection_key)
+            {
+                case 'q':
+                    WelcomeScreen();
+                    break;
+                default:
+                    CovidDesk();
+                    break;
+            }
+        }
+
+        //----------------------------------------------------------------------------------
+
+        //------------------------COVID-19 SYPMTOMS WINDOW-----------------------
+        static void CovidSymptoms()
+        {
+            string[] lines = File.ReadAllLines(Covid__symptoms);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                Console.WriteLine(lines[i]);
+            }
+
+            Console.WriteLine("\n");
+            Console.WriteLine("\t\t\t ===================================================================\n\n");
+            Console.WriteLine("\t\t 1. \t Press any key to go to Covid-19 Help Desk\n");
+            Console.WriteLine("\t\t 2. \t Press Q to to go to Main Menu\n\n\n");
+
+            char selection_key = Console.ReadKey().KeyChar;
+            selection_key = char.ToLower(selection_key);
+            Console.WriteLine("\n\n");
+
+            switch (selection_key)
+            {
+                case 'q':
+                    WelcomeScreen();
+                    break;
+                default:
+                    CovidDesk();
+                    break;
+            }
+        }
+
+        //----------------------------------------------------------------------------------
+
+        //------------------------COVID TEST REPORT WINDOW-----------------------
         static void CovidReport()
         {
             Console.Write("\n\n\t\t\tEnter Report ID to View:\t");
@@ -427,24 +488,14 @@ namespace hmd
                     break;
                 }
             }
-        }
-
-        static void CovidSymptoms()
-        {
-            string[] lines = File.ReadAllLines(Covid__symptoms);
-            for (int i = 0; i < lines.Length; i++)
-            {
-                Console.WriteLine(lines[i]);
-            }
 
             Console.WriteLine("\n");
             Console.WriteLine("\t\t\t ===================================================================\n\n");
-            Console.WriteLine("\t\t 2. \t Press any key to go to Covid-19 Help Desk\n\n\n");
+            Console.WriteLine("\t\t 1. \t Press any key to Covid-19 Help Desk\n");
             Console.WriteLine("\t\t 2. \t Press Q to to go to Main Menu\n\n\n");
 
             char selection_key = Console.ReadKey().KeyChar;
             selection_key = char.ToLower(selection_key);
-            Console.WriteLine("\n\n");
 
             switch (selection_key)
             {
@@ -457,75 +508,86 @@ namespace hmd
             }
         }
 
-        static void CovidGuides()
-        {
-            string[] lines = File.ReadAllLines(Covid__guides);
-            for (int i = 0; i < lines.Length; i++)
-            {
-                Console.WriteLine(lines[i]);
-            }
+        //--------------------------------------------------------------------------------
 
-            Console.WriteLine("\n");
-            Console.WriteLine("\t\t\t ===================================================================\n\n");
-            Console.WriteLine("\t\t 2. \t Press any key to go to Covid-19 Help Desk\n\n\n");
-            Console.WriteLine("\t\t 2. \t Press Q to to go to Main Menu\n\n\n");
+        //------------------------HMD MENU SCREEN-----------------------
+        static void MenuScreen()
+        {
+            Console.WriteLine();
+            Console.WriteLine(DateTime.Now.ToString("\t\t\tHH:mm:ss\t\t\t\t\t\t\tdd-MM-yyyy"));
+            Console.WriteLine("\t\t\t==========================================================================");
+            Console.WriteLine("\t\t\t\t*************** HOSPITAL MANAGEMENT SYSTEM MENU***************");
+            Console.WriteLine("\t\t\t==========================================================================\n\n");
+            Console.WriteLine("\t\t 1. \t Press D to select to get Docters Information\n");
+            Console.WriteLine("\t\t 2. \t Press P to select to get Patients Information\n");
+            Console.WriteLine("\t\t 3. \t Press C to go to Covid-19 Help Desk\n");
+            Console.WriteLine("\t\t 4. \t Press Q to go to Log out of HMS\n\n\n");
 
             char selection_key = Console.ReadKey().KeyChar;
             selection_key = char.ToLower(selection_key);
-            Console.WriteLine("\n\n");
 
             switch (selection_key)
             {
-                case 'q':
-                    WelcomeScreen();
+                case 'd':
+                    DrsInfo();
                     break;
-                default:
+                case 'p':
+                    PatientsWindow();
+                    break;
+                case 'c':
                     CovidDesk();
-                    break;
-            }
-        }
-
-        static void PrintAllDrsInfo()
-        {
-            // Doctor Timing View Window
-            Console.WriteLine(DateTime.Now.ToString("\t\t\tHH:mm:ss\t\t\t\t\t\tdd-MM-yyyy"));
-            Console.WriteLine("\t\t\t===================================================================");
-            Console.WriteLine("\t\t\t\t*************** Doctors Timing ***************");
-            Console.WriteLine("\t\t\t===================================================================\n\n");
-            Console.WriteLine("\t\t\tID\tName\t\t\tTiming\t\tCell No.\tDepartment\n");
-
-            string[] lines = File.ReadAllLines(path);
-            for (int i = 0; i < lines.Length; i++)
-            {
-                Console.WriteLine(lines[i]);
-            }
-            Console.WriteLine("\n");
-            Console.WriteLine("\t\t\t ===================================================================\n\n");
-            Console.WriteLine("\t\t 2. \t Press B to to go to Doctors Timing Window\n\n\n");
-            Console.WriteLine("\t\t 2. \t Press Q to to go to Main Menu\n\n\n");
-
-            char selection_key = Console.ReadKey().KeyChar;
-            selection_key = char.ToLower(selection_key);
-            Console.WriteLine("\n\n");
-
-            switch (selection_key)
-            {
-                case 'b':
-                    DrsTimming();
                     break;
                 case 'q':
                     WelcomeScreen();
                     break;
                 default:
                     Console.WriteLine("\t\t\tPlease Select Right Options\n\n");
-                    PrintAllDrsInfo();
+                    WelcomeScreen();
                     break;
             }
         }
 
+        //----------------------------------------------------------------------------
+
+        //------------------------DOCTORS INFORMATION WINDOW-----------------------
+        static void DrsInfo()
+        {
+
+            Console.WriteLine(DateTime.Now.ToString("\t\t\tHH:mm:ss\t\t\t\t\t\tdd-MM-yyyy"));
+            Console.WriteLine("\t\t\t===================================================================");
+            Console.WriteLine("\t\t\t\t*************** Doctors Information ***************");
+            Console.WriteLine("\t\t\t===================================================================\n\n");
+            Console.WriteLine("\t\t 1. \t Press E to enter Docters Timings\n");
+            Console.WriteLine("\t\t 2. \t Press V to view Doctor Timings\n");
+            Console.WriteLine("\t\t 3. \t Press Q to to go to Main Menu\n\n\n");
+
+            char selection_key = Console.ReadKey().KeyChar;
+            selection_key = char.ToLower(selection_key);
+            Console.WriteLine("\n\n");
+
+            switch (selection_key)
+            {
+                case 'e':
+                    InsertDrsInfo();
+                    break;
+                case 'v':
+                    PrintAllDrsInfo();
+                    break;
+                case 'q':
+                    MenuScreen();
+                    break;
+                default:
+                    Console.WriteLine("\t\t\tPlease Select Right Options\n\n");
+                    DrsInfo();
+                    break;
+            }
+        }
+
+        //----------------------------------------------------------------------------
+
+        //------------------------DOCTORS TIMING INSERTING WINDOW-----------------------
         static void InsertDrsInfo()
         {
-            //Doctor Timing Registering Window 
             int i = 1;
             Console.WriteLine(DateTime.Now.ToString("\t\t\tHH:mm:ss\t\t\t\t\t\tdd-MM-yyyy"));
             Console.WriteLine("\t\t\t===================================================================");
@@ -550,9 +612,34 @@ namespace hmd
                 Console.WriteLine();
 
 
-                File.AppendAllText(path, Environment.NewLine + "\t\t\t" + DID + "\t, " + D_name + " \t, " + D_timing + " \t, " + D_cell_no + " \t, " + D_dept);
-                Console.WriteLine("Data entered success");
+                File.AppendAllText(path, Environment.NewLine + "\t\t\t" + DID + "\t, " + D_name + "   \t, " + D_timing + " \t, " + D_cell_no + " \t, " + D_dept);
+                Console.WriteLine("\n\t\t\tData entered success\n");
                 Console.WriteLine();
+
+                Console.WriteLine("\t\t 1. \t Press C to Continue\n");
+                Console.WriteLine("\t\t 2. \t Press B to to go to Doctors Timing Window\n");
+                Console.WriteLine("\t\t 3. \t Press Q to to go to Main Menu\n\n\n");
+
+                char selection_key = Console.ReadKey().KeyChar;
+                selection_key = char.ToLower(selection_key);
+                Console.WriteLine("\n\n");
+
+                switch (selection_key)
+                {
+                    case 'c':
+                        InsertDrsInfo();
+                        break;
+                    case 'b':
+                        DrsInfo();
+                        break;
+                    case 'q':
+                        MenuScreen();
+                        break;
+                    default:
+                        Console.WriteLine("\t\t\tPlease Select Right Options\n\n");
+                        InsertDrsInfo();
+                        break;
+                }
 
                 Console.Write("Press C if you want to Continue:\t");
                 string key = Console.ReadLine();
@@ -568,39 +655,27 @@ namespace hmd
                 }
 
             } while (i < 1);
-            Console.WriteLine("\t\t 2. \t Press B to to go to Doctors Timing Window\n");
-            Console.WriteLine("\t\t 2. \t Press Q to to go to Main Menu\n\n\n");
-
-            char selection_key = Console.ReadKey().KeyChar;
-            selection_key = char.ToLower(selection_key);
-            Console.WriteLine("\n\n");
-
-            switch (selection_key)
-            {
-                case 'b':
-                    DrsTimming();
-                    break;
-                case 'q':
-                    WelcomeScreen();
-                    break;
-                default:
-                    Console.WriteLine("\t\t\tPlease Select Right Options\n\n");
-                    InsertDrsInfo();
-                    break;
-            }
         }
 
-        static void DrsTimming()
-        {
-            //Doctor Timing Window 
+        //-------------------------------------------------------------------------------------
 
+        //------------------------DOCTORS TIMING VIEWING WINDOW-----------------------
+        static void PrintAllDrsInfo()
+        {
             Console.WriteLine(DateTime.Now.ToString("\t\t\tHH:mm:ss\t\t\t\t\t\tdd-MM-yyyy"));
             Console.WriteLine("\t\t\t===================================================================");
             Console.WriteLine("\t\t\t\t*************** Doctors Timing ***************");
             Console.WriteLine("\t\t\t===================================================================\n\n");
-            Console.WriteLine("\t\t 1. \t Press E to enter Docters Timings\n");
-            Console.WriteLine("\t\t 2. \t Press V to view Doctor Timings\n");
-            Console.WriteLine("\t\t 2. \t Press B to to go to Doctors Information Window\n");
+            Console.WriteLine("\t\t\tID\t    Name\t        Timing\t         Cell No.\tDepartment\n");
+
+            string[] lines = File.ReadAllLines(path);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                Console.WriteLine(lines[i]);
+            }
+            Console.WriteLine("\n");
+            Console.WriteLine("\t\t\t ===================================================================\n\n");
+            Console.WriteLine("\t\t 1. \t Press B to to go to Doctors Timing Window\n");
             Console.WriteLine("\t\t 2. \t Press Q to to go to Main Menu\n\n\n");
 
             char selection_key = Console.ReadKey().KeyChar;
@@ -609,57 +684,24 @@ namespace hmd
 
             switch (selection_key)
             {
-                case 'e':
-                    InsertDrsInfo();
+                case 'b':
+                    DrsInfo();
                     break;
-                case 'v':
+                case 'q':
+                    MenuScreen();
+                    break;
+                default:
+                    Console.WriteLine("\t\t\tPlease Select Right Options\n\n");
                     PrintAllDrsInfo();
                     break;
-                case 'b':
-                    DrsWindow();
-                    break;
-                case 'q':
-                    WelcomeScreen();
-                    break;
-                default:
-                    Console.WriteLine("\t\t\tPlease Select Right Options\n\n");
-                    DrsTimming();
-                    break;
             }
         }
 
-        static void DrsWindow()
+        //------------------------------------------------------------------------------
+
+        //------------------------PATIENTS WINDOW-----------------------
+        static void PatientsWindow()
         {
-            //------------DOCTORS WINDOW---------
-            Console.WriteLine(DateTime.Now.ToString("\t\t\tHH:mm:ss\t\t\t\t\t\tdd-MM-yyyy"));
-            Console.WriteLine("\t\t\t===================================================================");
-            Console.WriteLine("\t\t\t\t*************** Doctors Information ***************");
-            Console.WriteLine("\t\t\t===================================================================\n\n");
-            Console.WriteLine("\t\t 1. \t Press T Docters Timings\n");
-            Console.WriteLine("\t\t 2. \t Press Q to to go to Main Menu\n\n\n");
-
-            char selection_key = Console.ReadKey().KeyChar;
-            selection_key = char.ToLower(selection_key);
-            Console.WriteLine("\n\n");
-
-            switch (selection_key)
-            {
-                case 't':
-                    DrsTimming();
-                    break;
-                case 'q':
-                    WelcomeScreen();
-                    break;
-                default:
-                    Console.WriteLine("\t\t\tPlease Select Right Options\n\n");
-                    DrsWindow();
-                    break;
-            }
-        }
-
-        static void patientsWindow()
-        {
-            //------------PATIENT WINDOW---------
             Console.WriteLine(DateTime.Now.ToString("\t\t\tHH:mm:ss\t\t\t\t\t\tdd-MM-yyyy"));
             Console.WriteLine("\t\t\t===================================================================");
             Console.WriteLine("\t\t\t\t*************** Patients Information ***************");
@@ -675,28 +717,296 @@ namespace hmd
             switch (selection_key)
             {
                 case 'i':
-                    Console.WriteLine("\t\t\tPatient info");
+                    PatientRecords();
                     break;
                 case 'a':
-                    Console.WriteLine("\t\t\tDoctors Appointment");
+                    DoctorsAppointment();
                     break;
                 case 'q':
-                    WelcomeScreen();
-                    break;
-                case 'p':
-                    patientsWindow();
+                    MenuScreen();
                     break;
                 default:
                     Console.WriteLine("\t\t\tPlease Select Right Options\n\n");
-                    patientsWindow();
+                    PatientsWindow();
                     break;
             }
         }
-        static void Main(string[] args)
+
+        //----------------------------------------------------------------------------------
+
+        //------------------------PATIENTS INFORMATION WINDOW-----------------------
+        static void PatientRecords()
         {
-            WelcomeScreen();
+            Console.WriteLine(DateTime.Now.ToString("\t\t\tHH:mm:ss\t\t\t\t\t\tdd-MM-yyyy"));
+            Console.WriteLine("\t\t\t===================================================================");
+            Console.WriteLine("\t\t\t\t*************** Patient Records ***************");
+            Console.WriteLine("\t\t\t===================================================================\n\n");
+            Console.WriteLine("Patient Name\tPatient Cell\tAge\tPatient ID\t\t\tDr ID\t  Doctor Name\t\tDoctor Timing\tDoctor Cell\tDepartment\n");
+
+            string[] lines = File.ReadAllLines(patient_info);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                Console.WriteLine(lines[i]);
+            }
+            Console.WriteLine("\n\n");
+            Console.WriteLine();
+            Console.WriteLine("\t\t 1. \t Press A to to go to Doctor Appointment Window\n");
+            Console.WriteLine("\t\t 2. \t Press S to to search specific Patient\n");
+            Console.WriteLine("\t\t 3. \t Press Q to to go to Main Menu\n");
+
+            char selection_key = Console.ReadKey().KeyChar;
+            selection_key = char.ToLower(selection_key);
+            Console.WriteLine("\n\n");
+
+            switch (selection_key)
+            {
+                case 'a':
+                    DoctorsAppointment();
+                    break;
+                case 's':
+                    SearchPatient();
+                    break;
+                case 'q':
+                    MenuScreen();
+                    break;
+                default:
+                    Console.WriteLine("\t\t\tPlease Select Right Options\n\n");
+                    PatientRecords();
+                    break;
+            }
         }
 
-        //------------Doctor info window-------
+        //-------------------------------------------------------------------------
+
+        //------------------------PATIENTS SEARCH WINDOW-----------------------
+        static void SearchPatient()
+        {
+            int c = 1;
+            Console.WriteLine(DateTime.Now.ToString("\t\t\tHH:mm:ss\t\t\t\t\t\tdd-MM-yyyy"));
+            Console.WriteLine("\t\t\t===================================================================");
+            Console.WriteLine("\t\t\t\t*************** Patient Search Window ***************");
+            Console.WriteLine("\t\t\t===================================================================\n\n");
+            do
+            {
+                Console.Write("\t\t\tEnter Paitent's ID:\t");
+                string patient_id = Console.ReadLine();
+                FileStream inFile = new FileStream(patient_info, FileMode.Open, FileAccess.Read);
+                StreamReader reader = new StreamReader(inFile);
+                string record;
+                Console.WriteLine();
+                try
+                {
+                    //the program reads the record and displays it
+                    record = reader.ReadLine();
+                    while (record != null)
+                    {
+                        if (record.Contains(patient_id))
+                        {
+                            Console.WriteLine("\t\t\t-------------------------------------------------------------------");
+                            Console.WriteLine("\t\t\t\t*************** Patient Details ***************");
+                            Console.WriteLine("\t\t\t-------------------------------------------------------------------\n\n");
+                            Console.WriteLine(record);
+
+                        }
+                        record = reader.ReadLine();
+                    }
+                }
+                finally
+                {
+                    //after the record is done being read, the progam closes
+                    reader.Close();
+                    inFile.Close();
+                }
+                Console.WriteLine();
+                Console.Write("\t\tPress C if you want to Continue:\t");
+                string key = Console.ReadLine();
+                key = key.ToLower();
+
+                if (key == "c")
+                {
+                    c--;
+                }
+                else
+                {
+                    c++;
+                }
+
+            } while (c < 1);
+            Console.WriteLine("\t\t 1. \t Press I for Patients Info\n");
+            Console.WriteLine("\t\t 2. \t Press A to select to book Doctors Appointment\n");
+            Console.WriteLine("\t\t 3. \t Press Q to to go to Main Menu\n");
+            char selection_key = Console.ReadKey().KeyChar;
+            selection_key = char.ToLower(selection_key);
+            Console.WriteLine("\n\n");
+
+            switch (selection_key)
+            {
+                case 'i':
+                    PatientRecords();
+                    break;
+                case 'a':
+                    DoctorsAppointment();
+                    break;
+                case 'q':
+                    MenuScreen();
+                    break;
+                case 'p':
+                    PatientsWindow();
+                    break;
+                default:
+                    Console.WriteLine("\t\t\tPlease Select Right Options\n\n");
+                    SearchPatient();
+                    break;
+            }
+        }
+
+        //-----------------------------------------------------------------------------------
+
+        //------------------------DOCTORS APPOINTMNET WINDOW-----------------------
+        static void DoctorsAppointment()
+        {
+            string doc_details;
+            int c = 1;
+            Console.WriteLine(DateTime.Now.ToString("\t\t\tHH:mm:ss\t\t\t\t\t\tdd-MM-yyyy"));
+            Console.WriteLine("\t\t\t===================================================================");
+            Console.WriteLine("\t\t\t\t*************** Doctors Appoitnment ***************");
+            Console.WriteLine("\t\t\t===================================================================\n\n");
+            do
+            {
+                int patient_id = 0;
+                Random random = new Random();
+                patient_id = random.Next(100, 999);
+                Console.Write("\t\t\tEnter Patients Name:\t");
+                string p_name = Console.ReadLine();
+                Console.WriteLine();
+                Console.Write("\t\t\tEnter Patients Contact Number:\t");
+                long contact = Convert.ToInt64(Console.ReadLine());
+                Console.WriteLine();
+                Console.Write("\t\t\tEnter Patients Age:\t");
+                int age = Convert.ToInt16(Console.ReadLine());
+                Console.WriteLine();
+                Console.WriteLine("\t\t\tPatient ID assigned to patient " + p_name + " is : " + patient_id);
+                Console.WriteLine();
+                Console.Write("\t\t\tDoctors List:\t");
+                Console.WriteLine();
+                string[] lines = File.ReadAllLines(path);
+                for (int i = 0; i < lines.Length; i++)
+                {
+                    Console.WriteLine(lines[i]);
+                }
+                Console.Write("\t\t\tEnter Doctor's ID, patient want appoiintment for:\t");
+                string d_id = Console.ReadLine();
+                FileStream inFile = new FileStream(drs_info, FileMode.Open, FileAccess.Read);
+                StreamReader reader = new StreamReader(inFile);
+                string record;
+                Console.WriteLine();
+                try
+                {
+                    //the program reads the record and displays it
+                    record = reader.ReadLine();
+                    while (record != null)
+                    {
+                        if (record.Contains(d_id))
+                        {
+                            doc_details = record;
+                            File.AppendAllText(patient_info, Environment.NewLine + "\t" + p_name + "\t" + contact + "\t" + age + "\t" + patient_id + doc_details);
+                            Console.WriteLine();
+                            Console.WriteLine("\t\t\t\t\t-----------------------------");
+                            Console.WriteLine("\t\t\t\t\tAppointment Confirmed.!");
+                            Console.WriteLine("\t\t\t\t\tData Entered Succesfully.!");
+                            Console.WriteLine("\t\t\t\t\t-----------------------------");
+                        }
+                        record = reader.ReadLine();
+                    }
+                }
+                finally
+                {
+                    //after the record is done being read, the progam closes
+                    reader.Close();
+                    inFile.Close();
+                }
+                Console.WriteLine();
+                Console.Write("\t\tPress C if you want to Continue:\t");
+                string key = Console.ReadLine();
+                key = key.ToLower();
+
+                if (key == "c")
+                {
+                    c--;
+                }
+                else
+                {
+                    c++;
+                }
+            } while (c < 1);
+            Console.WriteLine();
+            Console.WriteLine("\t\t 1. \t Press I to to go to Patient Info Window Window\n");
+            Console.WriteLine("\t\t 2. \t Press S to to search specific Patient\n");
+            Console.WriteLine("\t\t 3. \t Press Q to to go to Main Menu\n");
+
+
+            char selection_key = Console.ReadKey().KeyChar;
+            selection_key = char.ToLower(selection_key);
+            Console.WriteLine("\n\n");
+
+            switch (selection_key)
+            {
+                case 'i':
+                    PatientRecords();
+                    break;
+                case 's':
+                    SearchPatient();
+                    break;
+                case 'q':
+                    MenuScreen();
+                    break;
+                default:
+                    Console.WriteLine("\t\t\tPlease Select Right Options\n\n");
+                    DoctorsAppointment();
+                    break;
+            }
+
+
+        }
+
+        //------------------------------------------------------------------------------------
+
+        //------------------------PASSWORD MASKING METHOD-----------------------
+        public static string ReadPassword()
+        {
+            
+            string password = "";
+            ConsoleKeyInfo info = Console.ReadKey(true);
+            while (info.Key != ConsoleKey.Enter)
+            {
+                if (info.Key != ConsoleKey.Backspace)
+                {
+                    Console.Write("*");
+                    password += info.KeyChar;
+                }
+                else if (info.Key == ConsoleKey.Backspace)
+                {
+                    if (!string.IsNullOrEmpty(password))
+                    {
+                        // remove one character from the list of password characters
+                        password = password.Substring(0, password.Length - 1);
+                        // get the location of the cursor
+                        int pos = Console.CursorLeft;
+                        // move the cursor to the left by one character
+                        Console.SetCursorPosition(pos - 1, Console.CursorTop);
+                        // replace it with space
+                        Console.Write(" ");
+                        // move the cursor to the left by one character again
+                        Console.SetCursorPosition(pos - 1, Console.CursorTop);
+                    }
+                }
+                info = Console.ReadKey(true);
+            }
+            password = password.ToLower();
+            // add a new line because user pressed enter at the end of their password
+            Console.WriteLine();
+            return password;
+        }
+
     }
 }

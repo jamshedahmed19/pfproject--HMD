@@ -1,3 +1,7 @@
 
 	3305		Jamshed Ahmed	19	good		 Negative	You/'re fine, still maintain social distancing
 	3932		Nomir Nasir	18	good		 Uncomfirmed	Should Go to Hospital
+	8880		Junaid Yousaf	23	good		 Uncomfirmed	Should Go to Hospital
+	7791		Hammad Waseem	17	good		 Negative	You/'re fine, still maintain social distancing
+	9988		Asfand Tariq	19	good		 Positive	Should Go to Hospital
+	5112		Uzair Ahmed	18	bad		 Negative	You/'re fine, still maintain social distancing
