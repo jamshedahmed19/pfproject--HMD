@@ -778,7 +778,6 @@ namespace hmd
 
         //-------------------------------------------------------------------------
 
-        //------------------------PATIENTS SEARCH WINDOW-----------------------
         static void SearchPatient()
         {
             int c = 1;
@@ -790,33 +789,19 @@ namespace hmd
             {
                 Console.Write("\t\t\tEnter Paitent's ID:\t");
                 string patient_id = Console.ReadLine();
-                FileStream inFile = new FileStream(patient_info, FileMode.Open, FileAccess.Read);
-                StreamReader reader = new StreamReader(inFile);
-                string record;
                 Console.WriteLine();
-                try
+                foreach (string line in System.IO.File.ReadAllLines(patient_info))
                 {
-                    //the program reads the record and displays it
-                    record = reader.ReadLine();
-                    while (record != null)
+                    if (line.Contains(patient_id))
                     {
-                        if (record.Contains(patient_id))
-                        {
-                            Console.WriteLine("\t\t\t-------------------------------------------------------------------");
-                            Console.WriteLine("\t\t\t\t*************** Patient Details ***************");
-                            Console.WriteLine("\t\t\t-------------------------------------------------------------------\n\n");
-                            Console.WriteLine(record);
-
-                        }
-                        record = reader.ReadLine();
+                        Console.WriteLine("\t\t\t-------------------------------------------------------------------");
+                        Console.WriteLine("\t\t\t\t*************** Patient Details ***************");
+                        Console.WriteLine("\t\t\t-------------------------------------------------------------------\n\n");
+                        Console.WriteLine(line);
+                        break;
                     }
                 }
-                finally
-                {
-                    //after the record is done being read, the progam closes
-                    reader.Close();
-                    inFile.Close();
-                }
+
                 Console.WriteLine();
                 Console.Write("\t\tPress C if you want to Continue:\t");
                 string key = Console.ReadLine();
